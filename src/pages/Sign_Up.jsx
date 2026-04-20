@@ -1,47 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 
 function SignUp() {
+  const [form, setForm] = useState({
+    role: "",
+    name: "",
+    email: "",
+    phone: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form)
+    });
+
+    const data = await res.json();
+    alert(data.message);
+  };
+
   return (
-    <div style={container}>
+    <div>
       <h2>Sign Up</h2>
-
-      <input placeholder="Role" style={input} />
-      <input placeholder="Name" style={input} />
-      <input placeholder="Email" style={input} />
-      <input placeholder="Phone" style={input} />
-      <input placeholder="Password" type="password" style={input} />
-
-      <button style={button}>Sign Up</button>
+      <input name="role" placeholder="Role" onChange={handleChange} />
+      <input name="name" placeholder="Name" onChange={handleChange} />
+      <input name="email" placeholder="Email" onChange={handleChange} />
+      <input name="phone" placeholder="Phone" onChange={handleChange} />
+      <input name="password" placeholder="Password" onChange={handleChange} />
+      <button onClick={handleSubmit}>Sign Up</button>
     </div>
   );
 }
-
-const container = {
-  width: "300px",
-  margin: "50px auto",
-  padding: "25px",
-  background: "#fff",
-  borderRadius: "10px",
-  boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-  textAlign: "center"
-};
-
-const input = {
-  width: "100%",
-  padding: "10px",
-  margin: "10px 0",
-  borderRadius: "5px",
-  border: "1px solid #ccc"
-};
-
-const button = {
-  padding: "10px",
-  width: "100%",
-  backgroundColor: "#4CAF50",
-  color: "white",
-  border: "none",
-  borderRadius: "5px",
-  cursor: "pointer"
-};
 
 export default SignUp;

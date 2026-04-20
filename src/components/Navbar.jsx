@@ -6,22 +6,26 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    alert("Logged out");
+    alert("Logged out successfully");
+    window.location.reload();
   };
 
   return (
-    <nav>
+    <div style={{ padding: "10px", background: "#ccc" }}>
       <h2>StayHealthy</h2>
 
-      <Link to="/">Home</Link>
-      <Link to="/appointments">Appointments</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Sign Up</Link>
-
-      {isLoggedIn && (
+      <Link to="/">Home</Link> |{" "}
+      <Link to="/search">Appointments</Link> |{" "}
+      
+      {!isLoggedIn ? (
+        <>
+          <Link to="/login">Login</Link> |{" "}
+          <Link to="/">Sign Up</Link>
+        </>
+      ) : (
         <button onClick={handleLogout}>Logout</button>
       )}
-    </nav>
+    </div>
   );
 }
 

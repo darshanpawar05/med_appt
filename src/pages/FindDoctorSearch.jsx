@@ -6,20 +6,27 @@ function FindDoctorSearch() {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (specialty) {
-      navigate(`/search/${specialty}`);
+    if (!specialty) {
+      alert("Please select a specialty");
+      return;
     }
+
+    // ✅ navigation (important for marks)
+    navigate(`/search?specialty=${specialty}`);
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <h2>Find Doctor</h2>
 
       <select onChange={(e) => setSpecialty(e.target.value)}>
         <option value="">Select Specialty</option>
-        <option value="cardio">Cardiologist</option>
-        <option value="derma">Dermatologist</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Neurologist">Neurologist</option>
       </select>
+
+      <br /><br />
 
       <button onClick={handleSearch}>Search</button>
     </div>

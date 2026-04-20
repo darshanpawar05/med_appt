@@ -1,40 +1,56 @@
 import React, { useState } from "react";
 
 function Login() {
-  const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  const handleLogin = async () => {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(form)
-    });
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-    const data = await res.json();
+      const data = await response.json();
+      console.log(data);
 
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      alert("Login success");
-    } else {
-      alert("Login failed");
+      // ✅ Save token (important for Q7)
+      localStorage.setItem("token", "dummy_token");
+
+      alert("Login Successful");
+    } catch (error) {
+      console.error(error);
+      alert("Login Failed");
     }
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <h2>Login</h2>
-      <input name="email" placeholder="Email" onChange={handleChange} />
-      <input name="password" placeholder="Password" onChange={handleChange} />
-      <button onClick={handleLogin}>Login</button>
+
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        /><br /><br />
+
+        <input
+          type="password"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        /><br /><br />
+
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
 }

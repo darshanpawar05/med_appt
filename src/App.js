@@ -1,32 +1,31 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import SignUp from "./components/Sign_Up";
-import Login from "./components/Login";
-import FindDoctorSearch from "./components/FindDoctorSearch";
+import Sign_Up from "./pages/Sign_Up";
+import Login from "./pages/Login";
+import FindDoctorSearch from "./pages/FindDoctorSearch";
 
 function App() {
+  const [message, setMessage] = useState("");
+
+  const showNotification = (msg) => {
+    setMessage(msg);
+    setTimeout(() => setMessage(""), 3000);
+  };
+
   return (
-    <Router>
+    <div>
+      {message && <p>{message}</p>}
+
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<FindDoctorSearch />} />
+        <Route path="/" element={<Sign_Up />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-
-        {/* ✅ THIS IS THE FIX */}
-        <Route 
-          path="/appointments" 
-          element={
-            <h2 style={{ textAlign: "center", marginTop: "50px" }}>
-              Appointments Page
-            </h2>
-          } 
-        />
+        <Route path="/search" element={<FindDoctorSearch />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 

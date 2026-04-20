@@ -2,24 +2,23 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("user");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    alert("Logged out successfully");
-    window.location.reload();
+    localStorage.removeItem("user");
+    alert("Logged out");
   };
 
   return (
-    <div style={{ padding: "10px", background: "#ccc" }}>
+    <div>
       <h2>StayHealthy</h2>
 
-      <Link to="/">Home</Link> |{" "}
-      <Link to="/search">Appointments</Link> |{" "}
-      
+      <Link to="/">Home</Link> | 
+      <Link to="/search">Appointments</Link> | 
+
       {!isLoggedIn ? (
         <>
-          <Link to="/login">Login</Link> |{" "}
+          <Link to="/login">Login</Link> | 
           <Link to="/">Sign Up</Link>
         </>
       ) : (

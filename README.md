@@ -1,4 +1,4 @@
-# StayHealthy Frontend
+# Medical Appointment Booking
 
 A React-based healthcare platform where users can register, login, search doctors, book appointments, and give reviews.
 

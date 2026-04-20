@@ -1,30 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function FindDoctorSearch() {
+  const [specialty, setSpecialty] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (!specialty) {
+      alert("Please select a specialty");
+      return;
+    }
+
+    // navigate to results page with selected specialty
+    navigate(`/search?specialty=${specialty}`);
+  };
+
   return (
-    <div style={{ textAlign: "center", marginTop: "80px" }}>
+    <div>
       <h2>Find Doctor</h2>
 
-      <input 
-        placeholder="Search doctor..."
-        style={{
-          padding: "10px",
-          width: "250px",
-          borderRadius: "5px",
-          border: "1px solid #ccc"
-        }}
-      />
+      <select onChange={(e) => setSpecialty(e.target.value)}>
+        <option value="">Select Specialty</option>
+        <option value="Cardiologist">Cardiologist</option>
+        <option value="Dermatologist">Dermatologist</option>
+        <option value="Neurologist">Neurologist</option>
+      </select>
 
-      <button style={{
-        padding: "10px",
-        marginLeft: "10px",
-        backgroundColor: "#4CAF50",
-        color: "white",
-        border: "none",
-        borderRadius: "5px"
-      }}>
-        Search
-      </button>
+      <button onClick={handleSearch}>Search</button>
     </div>
   );
 }
